@@ -1,0 +1,105 @@
+-- Create Database
+CREATE DATABASE CollegeDB;
+USE CollegeDB;
+
+-- =========================================
+-- 1. CREATE STUDENT TABLE
+-- =========================================
+
+CREATE TABLE Student (
+    Student_ID INT PRIMARY KEY,
+    Student_Name VARCHAR(50),
+    Department VARCHAR(30),
+    Marks INT,
+    City VARCHAR(30)
+);
+
+-- =========================================
+-- 2. INSERT RECORDS
+-- =========================================
+
+INSERT INTO Student VALUES
+(101, 'Arun', 'CSE', 85, 'Chennai'),
+(102, 'Bala', 'IT', 78, 'Madurai'),
+(103, 'David', 'CSE', 92, 'Chennai'),
+(104, 'John', 'ECE', 65, 'Coimbatore'),
+(105, 'Kumar', 'IT', 88, 'Chennai'),
+(106, 'Ravi', 'CSE', 75, 'Salem'),
+(107, 'Suresh', 'ECE', 81, 'Chennai'),
+(108, 'Vijay', 'IT', 90, 'Madurai'),
+(109, 'Manoj', 'CSE', 95, 'Chennai'),
+(110, 'Raj', 'ECE', 70, 'Salem');
+
+
+-- =========================================
+-- 3. CREATE VIEW
+-- =========================================
+
+-- Create a view containing CSE students
+CREATE VIEW CSE_Students AS
+SELECT Student_ID, Student_Name, Marks, City
+FROM Student
+WHERE Department = 'CSE';
+
+
+-- Display the View
+SELECT * FROM CSE_Students;
+
+
+-- =========================================
+-- 4. CREATE ANOTHER VIEW
+-- =========================================
+
+-- View students who scored above 80
+CREATE VIEW High_Scorers AS
+SELECT Student_ID, Student_Name, Department, Marks
+FROM Student
+WHERE Marks > 80;
+
+
+-- Display the View
+SELECT * FROM High_Scorers;
+
+
+-- =========================================
+-- 5. CREATE INDEX
+-- =========================================
+
+-- Create index on Department column
+CREATE INDEX idx_department
+ON Student(Department);
+
+
+-- Create index on Marks column
+CREATE INDEX idx_marks
+ON Student(Marks);
+
+
+-- =========================================
+-- 6. USING INDEXED COLUMN
+-- =========================================
+
+SELECT *
+FROM Student
+WHERE Department = 'CSE';
+
+
+-- =========================================
+-- 7. CHECK INDEXES
+-- =========================================
+
+SHOW INDEX FROM Student;
+
+
+-- =========================================
+-- 8. DROP VIEW
+-- =========================================
+
+-- DROP VIEW CSE_Students;
+
+
+-- =========================================
+-- 9. DROP INDEX
+-- =========================================
+
+-- DROP INDEX idx_department ON Student;
