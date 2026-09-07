@@ -1,0 +1,125 @@
+-- Create Database
+CREATE DATABASE CollegeDB;
+USE CollegeDB;
+
+-- Create Student Table
+CREATE TABLE Student (
+    Student_ID INT PRIMARY KEY,
+    Student_Name VARCHAR(50),
+    Department_ID INT,
+    Marks INT
+);
+
+-- Insert Student Records
+INSERT INTO Student VALUES
+(101, 'Arun', 1, 85),
+(102, 'Bala', 2, 78),
+(103, 'David', 1, 92),
+(104, 'John', 3, 65),
+(105, 'Kumar', 2, 88);
+
+-- Create Department Table
+CREATE TABLE Department (
+    Department_ID INT PRIMARY KEY,
+    Department_Name VARCHAR(50)
+);
+
+-- Insert Department Records
+INSERT INTO Department VALUES
+(1, 'CSE'),
+(2, 'IT'),
+(3, 'ECE'),
+(4, 'EEE');
+
+
+-- =========================================
+-- 1. INNER JOIN
+-- =========================================
+
+SELECT
+    Student.Student_ID,
+    Student.Student_Name,
+    Department.Department_Name,
+    Student.Marks
+FROM Student
+INNER JOIN Department
+ON Student.Department_ID = Department.Department_ID;
+
+
+-- =========================================
+-- 2. LEFT JOIN
+-- =========================================
+
+SELECT
+    Student.Student_ID,
+    Student.Student_Name,
+    Department.Department_Name
+FROM Student
+LEFT JOIN Department
+ON Student.Department_ID = Department.Department_ID;
+
+
+-- =========================================
+-- 3. RIGHT JOIN
+-- =========================================
+
+SELECT
+    Student.Student_ID,
+    Student.Student_Name,
+    Department.Department_Name
+FROM Student
+RIGHT JOIN Department
+ON Student.Department_ID = Department.Department_ID;
+
+
+-- =========================================
+-- 4. FULL OUTER JOIN
+-- =========================================
+-- MySQL does not directly support FULL OUTER JOIN.
+-- So use UNION of LEFT JOIN and RIGHT JOIN.
+
+SELECT
+    Student.Student_ID,
+    Student.Student_Name,
+    Department.Department_Name
+FROM Student
+LEFT JOIN Department
+ON Student.Department_ID = Department.Department_ID
+
+UNION
+
+SELECT
+    Student.Student_ID,
+    Student.Student_Name,
+    Department.Department_Name
+FROM Student
+RIGHT JOIN Department
+ON Student.Department_ID = Department.Department_ID;
+
+
+-- =========================================
+-- 5. JOIN WITH WHERE CONDITION
+-- =========================================
+
+SELECT
+    Student.Student_Name,
+    Department.Department_Name,
+    Student.Marks
+FROM Student
+INNER JOIN Department
+ON Student.Department_ID = Department.Department_ID
+WHERE Student.Marks > 80;
+
+
+-- =========================================
+-- 6. JOIN WITH ORDER BY
+-- =========================================
+
+SELECT
+    Student.Student_Name,
+    Department.Department_Name,
+    Student.Marks
+FROM Student
+INNER JOIN Department
+ON Student.Department_ID = Department.Department_ID
+ORDER BY Student.Marks DESC;
