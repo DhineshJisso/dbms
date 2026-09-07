@@ -1,0 +1,86 @@
+-- Create Database
+CREATE DATABASE CollegeDB;
+USE CollegeDB;
+
+-- Create Student Table
+CREATE TABLE Student (
+    Student_ID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Department VARCHAR(30),
+    Marks INT,
+    City VARCHAR(30)
+);
+
+-- Insert Records
+INSERT INTO Student VALUES
+(101, 'Arun', 'CSE', 85, 'Chennai'),
+(102, 'Bala', 'IT', 78, 'Madurai'),
+(103, 'David', 'CSE', 92, 'Chennai'),
+(104, 'John', 'ECE', 65, 'Coimbatore'),
+(105, 'Kumar', 'IT', 88, 'Chennai');
+
+-- =========================================
+-- 1. SIMPLE QUERIES
+-- =========================================
+
+-- Display all students
+SELECT * FROM Student;
+
+-- Display students from CSE department
+SELECT * FROM Student
+WHERE Department = 'CSE';
+
+-- Display students who scored more than 80
+SELECT Name, Marks
+FROM Student
+WHERE Marks > 80;
+
+-- Display students in descending order of marks
+SELECT Name, Department, Marks
+FROM Student
+ORDER BY Marks DESC;
+
+
+-- =========================================
+-- 2. NESTED QUERY / SUBQUERY
+-- =========================================
+
+-- Find students who scored more than the average marks
+SELECT Name, Marks
+FROM Student
+WHERE Marks > (
+    SELECT AVG(Marks)
+    FROM Student
+);
+
+-- Find the student with the highest marks
+SELECT Name, Marks
+FROM Student
+WHERE Marks = (
+    SELECT MAX(Marks)
+    FROM Student
+);
+
+-- Find students who belong to the same department as Arun
+SELECT Name, Department
+FROM Student
+WHERE Department = (
+    SELECT Department
+    FROM Student
+    WHERE Name = 'Arun'
+);
+
+
+-- =========================================
+-- 3. SUBQUERY WITH IN
+-- =========================================
+
+-- Find students from departments having students
+-- who scored more than 85
+SELECT Name, Department, Marks
+FROM Student
+WHERE Department IN (
+    SELECT Department
+    FROM Student
+    WHERE Marks > 85
+);
